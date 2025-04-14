@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi Rutina Fit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #333;
+    }
+    .menu-toggle {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 230px;
+      height: 100%;
+      background: #f7f7f7;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 10;
+    }
+    .sidebar.open {
+      left: 0;
+    }
+
+    body.menu-abierto {
+      overflow: hidden;
+    }
+
+    #contenido.menu-desplazado {
+      transform: translateX(230px);
+      transition: transform 0.3s ease;
+    }
+      left: 0;
+    }
+    .sidebar h2 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .sidebar a {
+      display: block;
+      margin: 8px 0;
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .sidebar a:hover {
+      background: #e3e3e3;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      font-size: 1.4em;
+      font-weight: 600;
+    }
+    #contenido {
+      padding: 20px;
+    }
+    .ejercicio {
+      background: #fefefe;
+      border: 1px solid #e0e0e0;
+      border-left: 6px solid #ffb347;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .nombre {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .detalle {
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .pesos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pesos label {
+      font-size: 0.85em;
+      flex: 1 1 45%;
+      background: #f0f8ff;
+      padding: 5px;
+      border-radius: 6px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 4px;
+      font-size: 1em;
+      margin-top: 3px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <div class="sidebar" id="menu">
+    <h2>Menú</h2>
+    <a href="#" onclick="mostrarDia(1)">Día 1: Pecho + Hombros</a>
+    <a href="#" onclick="mostrarDia(2)">Día 2: Espalda + Bíceps</a>
+    <a href="#">Progreso</a>
+    <a href="#">Medidas</a>
+  </div>
+  <header id="titulo">Día 1: Pecho + Hombros</header>
+  <div id="contenido"></div>
+
+  <script>
+    const rutinas = {
+      1: [
+        { nombre: "🏋️‍♂️ Press banca plano", detalle: "4x6–8 | Piramidal ascendente" },
+        { nombre: "🏋️‍♂️ Press inclinado con mancuernas", detalle: "3x8–10 | Piramidal ascendente" },
+        { nombre: "🤸 Aperturas en máquina o mancuernas", detalle: "3x12–15 | Peso constante" },
+        { nombre: "🎯 Press militar", detalle: "3x8–10 | Piramidal ascendente" },
+        { nombre: "👤 Elevaciones laterales", detalle: "3x12–15 | Peso constante" },
+        { nombre: "🔗 Extensión tríceps cuerda", detalle: "3x12–15 | Peso constante" },
+        { nombre: "🏗️ Fondos en paralelas / press cerrado", detalle: "3x8–10 | Peso corporal o piramidal" },
+        { nombre: "🎯 Extensión tras nuca (opcional)", detalle: "2x12–15 | Peso constante" }, detalle: "4x6–8 | Piramidal ascendente" },
+        { nombre: "🏋️‍♂️ Press inclinado con mancuernas", detalle: "3x8–10 | Piramidal ascendente" },
+        { nombre: "🤸 Aperturas en máquina", detalle: "3x12–15 | Peso constante" }
+      ],
+      2: [
+        { nombre: "🧗 Jalón al pecho", detalle: "4x8–10 | Peso constante" },
+        { nombre: "💪 Remo con barra", detalle: "3x6–8 | Progresivo" },
+        { nombre: "💥 Curl bíceps con mancuernas", detalle: "3x10–12 | Constante" }
+      ]
+    };
+
+    
+function toggleMenu() {
+  const menu = document.getElementById('menu');
+  const contenido = document.getElementById('contenido');
+  const abierto = menu.classList.toggle('open');
+  document.body.classList.toggle('menu-abierto', abierto);
+  contenido.classList.toggle('menu-desplazado', abierto);
+}
+
+      document.getElementById('menu').classList.toggle('open');
+    }
+
+    
+const titulos = {
+  1: "Pecho + Hombros",
+  2: "Espalda + Bíceps"
+};
+
+function mostrarDia(dia) {
+
+      document.getElementById('menu').classList.remove('open');
+      document.getElementById('titulo').textContent = `Día ${dia}: ${titulos[dia]}`;
+      const cont = document.getElementById('contenido');
+      cont.innerHTML = '';
+      rutinas[dia].forEach((ej, i) => {
+        let campos = '';
+        for (let semana = 1; semana <= 4; semana++) {
+          const id = `peso_${dia}_${i}_sem${semana}`;
+          const guardado = localStorage.getItem(id) || "";
+          campos += `<label>Semana ${semana}: <input type="number" id="${id}" value="${guardado}" onchange="guardarPeso('${id}')"></label>`;
+        }
+        cont.innerHTML += `
+          <div class="ejercicio">
+            <div class="nombre">${ej.nombre}</div>
+            <div class="detalle">${ej.detalle}</div>
+            <div class="pesos">${campos}</div>
+          </div>`;
+      });
+    }
+
+    function guardarPeso(id) {
+      const valor = document.getElementById(id).value;
+      localStorage.setItem(id, valor);
+    }
+
+    window.onload = () => mostrarDia(1);
+  </script>
+</body>
+</html>
